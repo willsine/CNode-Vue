@@ -1,0 +1,5 @@
+.content {
+  background-color: #fff; }
+  .content > ul li {
+    list-style: none;
+    border-bottom: 1px solid #ccc; }
