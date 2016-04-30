@@ -1,10 +1,14 @@
 <template>
   <section class="slide-nav-wrap">
-    <ul>
-      <li v-for="item in items">
-        {{item}}
+    <ul class="nav-menu">
+      <li v-for="item in items" v-on:click="switchTag(item, $event)">
+        {{item.val}}
       </li>
     </ul>
+    <ul class="nav-bottmo">
+      <li>消息</li>
+      <li>关于</li>
+    </l>
   </section>
 </template>
 
@@ -13,11 +17,37 @@
     data(){
       return {
         items: [
-          '全部',
-          '精华',
-          '问答',
-          '招聘'
+          {
+            name: 'all',
+            tag: 'all',
+            val: '全部'
+          },
+          {
+            name: 'good',
+            tag: 'good',
+            val: '精华'
+          },
+          {
+            name: 'share',
+            tag: 'sahre',
+            val: '分享'
+          },
+          {
+            name: 'ask',
+            tag: 'ask',
+            val: '问答'
+          },
+          {
+            name: 'job',
+            tag: 'job',
+            val: '招聘'
+          }
         ]
+      }
+    },
+    methods: {
+      switchTag(item, e) {
+        this.$dispatch('change-tag', item);
       }
     }
   }
@@ -26,16 +56,23 @@
 <style lang="sass">
   .slide-nav-wrap{
     display: flex;
+    flex-direction: column;
     width: 10rem;
     height: 100%;
     position: fixed;
     top: 0;
+    padding-top: 0.5rem;
+    background: url("../assets/images/bg.png") 100%;
     z-index: 6;
     left: -10rem;
     transition: all 0.3s ease;
-    background-color: #2CDAAA;
-
     ul{
+      color: #fff;
+      border-bottom: 1px solid #626262;
+      margin: 0;
+      padding: 0;
+      margin-left: 1rem;
+      margin-top: 1rem;
       li{
         list-style:none;
         height: 38px;
@@ -48,6 +85,6 @@
     transform: translateX(10rem);
   }
   .nav-hide {
-    transform: translateX(0);
+    transform: translateX(0rem);
   }
 </style>
