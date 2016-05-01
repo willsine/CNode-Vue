@@ -1,50 +1,22 @@
 'use strict'
 
-var http = require('http');
+var webpack = require('webpack');
+var WebpackDevServer = require('webpack-dev-server');
+var config = require('./webpack.config');
+config.entry.unshift('webpack-dev-server/client?http://localhost:8090', "webpack/hot/dev-server");
+config.plugins.push(new webpack.HotModuleReplacementPlugin());
 
-var proxy = require('express-http-proxy');
-var express = require("express");
-
-var app = express();
-
-app.use(express.static(__dirname));
-
-app.use('/api', proxy('https://cnodejs.org', {
-  forwardPath: function(req, res) {
-    return '/api'+req.url;
-  }
-}));
-
-var port = process.env.PORT || 8080;
-
-var server = http.createServer(app);
-
-server.listen(port);
-
-var onError = function(error) {
-  if (error.syscall !== 'listen') {
-    throw error;
-  }
-  var bind = typeof port === 'String' ? "Pipe " + port : "Port " + port;
-  switch (error.code) {
-    case "EACCES":
-      console.error(bind + " requires elevated privileges");
-      return process.exit(1);
-    case "EADDRINUSE":
-      console.error(bind + " is already in use");
-      return process.exit(1);
-    default:
-      throw error;
-  }
-};
-
-var onListening = function() {
-  var addr, bind;
-  addr = server.address();
-  bind = typeof addr === 'String' ? "Pipe " + addr : "Port " + addr.port;
-  return console.log("Listening on " + bind + " at " + (new Date()));
-};
-
-server.on('error', onError);
-
-server.on('listening', onListening);
+// 配置代理服务，将本地localhost:8090/api/请求代理到了http://cnodejs.org/api
+var proxy = [{
+    path: "/api/*",
+    target: "https://cnodejs.org",
+    host: "cnodejs.org"
+}]
+//启动服务
+var app = new WebpackDevServer(webpack(config), {
+    publicPath: config.output.publicPath,
+    hot:true,
+    historyApiFallback: true,
+    proxy:proxy
+});
+app.listen(8090);
