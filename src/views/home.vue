@@ -1,5 +1,5 @@
 <template>
-  <slider :show.sync="isShow" class="test" v-bind:class="{'nav-show': isShow, 'nav-hide':!isShow}"></slider>
+  <slider :show.sync="isShow" v-bind:class="{'nav-show': isShow, 'nav-hide':!isShow}"></slider>
   <header class="header header-flex" :class="{'nav-show': isShow, 'nav-hide':!isShow}">
     <div class="side-btn-wrap" v-on:click="toggle">
       <div class="side-btn"></div>
@@ -43,6 +43,7 @@
       </li>
     </ul>
     <div class="loading" v-if="isLoading">(´・ω・｀)加载中...</div>
+    <load :show-loading="showLoading" :load-msg="loadMsg"></load>
   </div>
   <top :is-page-too-long="isPageTooLong"><top>
 </template>
@@ -50,21 +51,24 @@
 <script>
   import slider from '../components/slider.vue';
   import top from '../components/top.vue';
+  import load from '../components/loading.vue';
   import {formatPublishTime} from '../filter';
   import {getList} from '../api.js';
 
   export default {
-    components: {slider, top},
+    components: {slider, top, load},
 
     data(){
       return {
         msg: 'Hello Vue',
         isShow: false,
         topics: null,
-        tagText: '首页',
+        tagText: '全部',
         pageNo: 1,
         isLoading: false,
-        isPageTooLong: false
+        isPageTooLong: false,
+        showLoading: true,
+        loadMsg: '加载中...'
       }
     },
 
@@ -85,10 +89,14 @@
             self.topics = self.topics?self.topics.concat((data.data)):data.data;
           }
           self.isLoading = false;
+          self.showLoading = false;
+
         })
         .catch(function (err){
           self.isLoading = false;
+          self.showLoading = false;
           self.topics = null;
+          if (isNewTag) self.loadMsg = '载入失败啦...'
           console.error('获取数据异常', err);
         });
       },
@@ -122,6 +130,9 @@
       'change-tag': function (item) {
         // 事件回调内的 `this` 自动绑定到注册它的实例上
         this.isShow = false;
+        this.showLoading = true;
+        this.topics = null;
+        this.tagText = item.val;
         this.featchData(item.tag, true);
       }
     },

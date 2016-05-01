@@ -18,27 +18,22 @@
       return {
         items: [
           {
-            name: 'all',
             tag: 'all',
             val: '全部'
           },
           {
-            name: 'good',
             tag: 'good',
             val: '精华'
           },
           {
-            name: 'share',
-            tag: 'sahre',
+            tag: 'share',
             val: '分享'
           },
           {
-            name: 'ask',
             tag: 'ask',
             val: '问答'
           },
           {
-            name: 'job',
             tag: 'job',
             val: '招聘'
           }

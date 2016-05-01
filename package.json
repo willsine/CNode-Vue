@@ -11,9 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "vue": "^1.0.17",
-    "vue-router": "^0.7.13"
-  },
-  "devDependencies": {
+    "vue-router": "^0.7.13",
     "babel-core": "^6.6.5",
     "babel-loader": "^6.2.4",
     "babel-plugin-transform-runtime": "^6.6.0",
