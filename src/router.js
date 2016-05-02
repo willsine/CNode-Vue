@@ -6,8 +6,10 @@ export default (router)=> {
     },
     '/topic/:topicId': {
         component: require('./views/topic.vue')
-    }
-
+    },
+    '/about': {
+        component: require('./views/about.vue')
+    },
   }),
   router.redirect({
     "*": "/home"

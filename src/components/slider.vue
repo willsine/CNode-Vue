@@ -7,7 +7,7 @@
     </ul>
     <ul class="nav-bottmo">
       <li>消息</li>
-      <li>关于</li>
+      <li v-link="{path: '/about'}">关于</li>
     </l>
   </section>
 </template>

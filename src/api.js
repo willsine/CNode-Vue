@@ -10,3 +10,11 @@ export let getList = async (page, tag) => {
 
   return await response.json();
 }
+
+export let getTopic = async (id) => {
+  let data = await fetch(`/api/v1/topic/${id}`).catch((error) => {
+    console.log(error)
+  });
+
+  return await data.json();
+}

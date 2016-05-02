@@ -14,14 +14,12 @@
   .load-page {
     position: absolute;
     left: 0;
-    top: 2rem;
+    top: 2.1rem;
     right: 0;
     bottom: 0;
     z-index: 100;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
     background-color: #fff;
     padding-top: 10rem;
+    text-align: center;
   }
 </style>

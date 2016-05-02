@@ -22,7 +22,9 @@
             <p class="time" v-text="topic.create_at | formatPublishTime"></p>
           </div>
         </div>
-        <p class="topic-content">{{topic.title}}</p>
+        <a class="topic-link" v-link="{path: '/topic/' + topic.id}">
+          <p class="topic-content">{{topic.title}}</p>
+        </a>
         <div class="topic-bottom">
           <div class="pv">
             <span class="icon pv">
@@ -163,6 +165,7 @@
         color: #333;
         text-decoration: none;
         font-size: 14px;
+        word-break: break-all;
       }
       p{
         margin:0;
@@ -269,12 +272,15 @@
             .topic-content{
               margin: 0.6rem 0;
               padding: 0 0.6rem;
+              font-size: 1rem;
             }
             .topic-bottom{
               display: flex;
               justify-content: space-around;
               border-top: 1px solid #e6e6e6;
               padding-top: 0.5rem;
+              font-size: 14px;
+              color: #666;
               .icon{
                 display: inline-block;
                 padding-left: 1.1rem;
